@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jblog Login Page</title>
+
+<script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="/common.js"></script>
+
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+		
+	});
+	
+	var Service = {
+			fnGoLogin : function(){
+				var userId = $("#iptUserId").val();
+				var userPwd = $("#iptUserPwd").val();
+				
+				if(userId === ""){
+					alert("아이디를 입력해주세요.")
+					return;
+				}
+				if(userPwd === ""){
+					alert("비밀번호를 입력해주세요.")
+					return;
+				}
+				
+				$.ajax({
+					url : '/procLogin',
+					method : 'POST',
+					contentType: 'application/json; charset=utf-8',
+					dataType : 'json',	/*html, text, json, xml, script*/
+					data : JSON.stringify({
+						 "userId" : userId
+						,"userPwd" : userPwd
+					}),
+					beforeSend : function(xhr){
+						// 헤더추가 등등...
+						xhr.setRequestHeader("Access-Control-Allow-Origin", "http://localhost:8080");
+						xhr.setRequestHeader("toekn", "123123");
+					},
+					success : function(res){
+						
+						location.href="/loginSuccess.html"
+						
+					},
+					error : function(xhr, status, error){
+						console.log(xhr.status); // 에러코드(404, 500 등)
+						console.log(xhr.responseText); // html 포맷의 에러 메시지
+					}
+				});
+			},
+	};
+	
+</script>
+
+</head>
+<body>
+
+<h3>테스트 로그인 페이지</h3>
+
+<form id="loginForm">
+	아이디 : <input type="text" id="iptUserId"/>
+	<br/>패스워드 : <input type="password" id="iptUserPwd"/>
+	
+	<br/><br/>캡챠
+	
+	<br/><br/>
+	<a type="button" id="btnLogin" onclick="Service.fnGoLogin()" style="cursor: pointer;">로그인</a>
+</form>
+
+</body>
+</html>
