@@ -10,13 +10,12 @@ import org.springframework.context.annotation.ComponentScan;
 
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 @SpringBootApplication
-@ComponentScan
+@ComponentScan(basePackages = {"com.home.jblog.api.login.mapper"})
 public class JblogApplication extends SpringBootServletInitializer {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(JblogApplication.class, args);
 	}
-	
 	
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(JblogApplication.class);

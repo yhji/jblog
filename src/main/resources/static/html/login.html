@@ -2,6 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<meta name="_csrf" content="${_csrf.token}"/>
 <title>Jblog Login Page</title>
 
 <script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
@@ -16,13 +18,13 @@
 	var Service = {
 			fnGoLogin : function(){
 				var userId = $("#iptUserId").val();
-				var userPwd = $("#iptUserPwd").val();
+				var userPw = $("#iptUserPw").val();
 				
 				if(userId === ""){
 					alert("아이디를 입력해주세요.")
 					return;
 				}
-				if(userPwd === ""){
+				if(userPw === ""){
 					alert("비밀번호를 입력해주세요.")
 					return;
 				}
@@ -34,16 +36,22 @@
 					dataType : 'json',	/*html, text, json, xml, script*/
 					data : JSON.stringify({
 						 "userId" : userId
-						,"userPwd" : userPwd
+						,"userPw" : userPw
 					}),
 					beforeSend : function(xhr){
 						// 헤더추가 등등...
+						var header = $("meta[name='_csrf_header']").attr("content");
+						var token = $("meta[name='_csrf']").attr("content");
+						console.log("csrf_header :: " + header);
+						console.log("csrf_token :: " + token);
+						
+						//xhr.setRequestHeader(header, token);
 						xhr.setRequestHeader("Access-Control-Allow-Origin", "http://localhost:8080");
-						xhr.setRequestHeader("toekn", "123123");
+						//xhr.setRequestHeader("toekn", "123123");
 					},
 					success : function(res){
 						
-						location.href="/loginSuccess.html"
+						location.href="/html/loginSuccess.html"
 						
 					},
 					error : function(xhr, status, error){
@@ -63,7 +71,7 @@
 
 <form id="loginForm">
 	아이디 : <input type="text" id="iptUserId"/>
-	<br/>패스워드 : <input type="password" id="iptUserPwd"/>
+	<br/>패스워드 : <input type="password" id="iptUserPw"/>
 	
 	<br/><br/>캡챠
 	

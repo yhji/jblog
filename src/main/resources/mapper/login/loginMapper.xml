@@ -3,9 +3,13 @@
 
 <mapper namespace="com.home.jblog.api.login.mapper.LoginMapper">
     
-	<select id="findAll" resultType="HashMap">
-		/**/
-		select * from lotto
+	<select id="selectUser" parameterType="userVO" resultType="userVO">
+		/*LoginMapper.selectUser*/
+		select user_id as userId
+		     , password as userPw
+		     , user_name as userNm
+		  from jblog.tb_user
+		 limit 1
 	</select>
     
 </mapper>

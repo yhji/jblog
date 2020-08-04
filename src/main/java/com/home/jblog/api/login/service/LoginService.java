@@ -1,9 +1,10 @@
 package com.home.jblog.api.login.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.home.jblog.api.login.mapper.LoginMapper;
+import com.home.jblog.api.login.vo.UserVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,16 +12,16 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class LoginService {
 	
-	public Map<String, Object> login(Map<String, Object> param){
+	@Autowired
+	LoginMapper loginMapper;
+	
+	public UserVO selectUser(UserVO param){
 		log.info("LoginService.login start..");
 		
-		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
+		//log.info("LoginService.login end..");
 		
-		
-		log.info("LoginService.login end..");
-		
-		return resultMap;
+		return loginMapper.selectUser(param);
 	}
 	
 }
